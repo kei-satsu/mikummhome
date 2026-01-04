@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="my">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Coming Soon - MIKU MM</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@400;700;900&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        :root {
+            --primary-blue: #60a5fa; /* ပိုလင်းတဲ့ အပြာရောင် */
+            --bg-dark: #050505;
+            --text-main: #ffffff; /* စာသားကို အဖြူစစ်စစ် ပြောင်းထားတယ် */
+        }
+
+        * {
+            margin: 0; padding: 0; box-sizing: border-box;
+            font-family: 'Outfit', 'Padauk', sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-dark);
+            background-image: 
+                linear-gradient(rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.9)),
+                url('background.jpg'); 
+            background-size: cover;
+            background-position: center;
+            color: var(--text-main);
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+        }
+
+        .container {
+            padding: 20px;
+            animation: fadeIn 1s ease-in-out;
+        }
+
+        /* --- LOGO --- */
+        .logo {
+            max-width: 150px;
+            margin-bottom: 30px;
+            filter: drop-shadow(0 0 20px rgba(96, 165, 250, 0.6));
+        }
+
+        /* --- TEXT --- */
+        h1 {
+            font-size: clamp(2.5rem, 8vw, 4.5rem); /* ဖုန်းနဲ့ ကွန်ပျူတာ အလိုအလျောက်အရွယ်အစားညှိ */
+            font-weight: 900;
+            letter-spacing: 3px;
+            margin-bottom: 15px;
+            color: #ffffff;
+            text-transform: uppercase;
+            text-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        }
+
+        .highlight {
+            color: var(--primary-blue);
+            text-shadow: 0 0 15px rgba(96, 165, 250, 0.5);
+        }
+
+        p {
+            font-size: 1.2rem;
+            color: #e0e0e0; /* စာသားကို ပိုလင်းအောင် ပြုပြင်ထားတယ် */
+            max-width: 500px;
+            margin: 0 auto 40px;
+            line-height: 1.8;
+            font-weight: 400;
+        }
+
+        /* --- LOADING ANIMATION --- */
+        .loading-bar {
+            width: 200px;
+            height: 4px;
+            background: rgba(255,255,255,0.1);
+            margin: 0 auto;
+            border-radius: 10px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .loading-bar::after {
+            content: '';
+            position: absolute;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: var(--primary-blue);
+            box-shadow: 0 0 15px var(--primary-blue);
+            animation: progress 2s infinite linear;
+        }
+
+        .back-home {
+            margin-top: 50px;
+            display: inline-block;
+            color: var(--primary-blue);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            border: 1px solid var(--primary-blue);
+            padding: 10px 25px;
+            border-radius: 50px;
+            transition: 0.3s;
+        }
+
+        .back-home:hover {
+            background: var(--primary-blue);
+            color: white;
+            box-shadow: 0 0 20px rgba(96, 165, 250, 0.4);
+        }
+
+        @keyframes progress {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <img src="logo.png" alt="MIKU MM" class="logo" onerror="this.style.display='none'">
+        
+        <h1>COMING <span class="highlight">SOON</span></h1>
+        
+        <p>
+            MIKU MM ရဲ့ ဒီ Website ကို တည်ဆောက်နေဆဲ ဖြစ်ပါတယ် 👉👈<br>
+            မကြာမီမှာ အားလုံးအတွက် အဆင်သင့်ဖြစ်တော့မှာပါ 😜
+        </p>
+
+        <div class="loading-bar"></div>
+
+        <a href="index.html" class="back-home">
+            <i class="fa-solid fa-house"></i> GO BACK HOME
+        </a>
+    </div>
+
+</body>
+</html>

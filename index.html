@@ -1,293 +1,476 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>MIKU MM - Anime နဲ့ ပက်သတ်တဲ့ မြန်မာစာတန်းထိုးများ</title>
+    <title>MIKU MM - Anime World Myanmar</title>
+    <meta name="description" content="Anime, Hanime နှင့် Japanese Music များကို မြန်မာစာတန်းထိုးဖြင့် ကြည့်ရှုနိုင်သော နေရာ။">
     <link rel="icon" type="image/png" href="favicon.ico">
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;700;900&family=Padauk:wght@400;700&display=swap" rel="stylesheet">
+    
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     
-    
     <style>
-        /* --- CSS STYLES --- */
+        /* --- CSS VARIABLES & RESET --- */
         :root {
-            --anime-color: #3b82f6; /* Blue */
-            --hentai-color: #ef4444; /* Red */
-            --music-color: #a855f7;  /* Purple */
-            --bg-dark: #050505;
-            --glass-black: rgba(0, 0, 0, 0.7); /* အမည်းရောင် Glass */
-            --border-light: rgba(255, 255, 255, 0.1);
+            --primary-blue: #3b82f6;
+            --danger-red: #ef4444;
+            --magic-purple: #a855f7;
+            --bg-dark: #0a0a0a;
+            --glass-bg: rgba(20, 20, 20, 0.6);
+            --glass-border: rgba(255, 255, 255, 0.08);
+            --neon-glow: 0 0 15px rgba(59, 130, 246, 0.3);
         }
 
         * {
             margin: 0;
             padding: 0;
             box-sizing: border-box;
-            font-family: 'Outfit', sans-serif;
+            font-family: 'Outfit', 'Padauk', sans-serif;
         }
 
         body {
-            /* Background ပုံ (ပုံအလန်းစားတစ်ခု ရှာထည့်ပါ) */
-            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('background.jpg');
+            background-color: var(--bg-dark);
+            /* Fallback background if image missing */
+            background-image: 
+                linear-gradient(to bottom, rgba(0,0,0,0.7), #0a0a0a),
+                url('background.jpg'); 
             background-size: cover;
             background-position: center;
             background-attachment: fixed;
-            background-repeat: no-repeat;
-            
             color: white;
             min-height: 100vh;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+        }
+
+        /* --- PRELOADER --- */
+        #preloader {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: #000;
+            z-index: 9999;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            transition: opacity 0.5s ease;
+        }
+        .loader {
+            width: 50px;
+            height: 50px;
+            border: 5px solid #333;
+            border-top: 5px solid var(--primary-blue);
+            border-radius: 50%;
+            animation: spin 1s linear infinite;
+            margin-bottom: 20px;
+        }
+        .loader-text {
+            color: var(--primary-blue);
+            font-weight: bold;
+            letter-spacing: 2px;
+            animation: pulse 1.5s infinite;
+        }
+
+        /* --- BACKGROUND PARTICLES (CSS ONLY) --- */
+        .particles {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            overflow: hidden;
+            z-index: -1;
+            pointer-events: none;
+        }
+        .particle {
+            position: absolute;
+            width: 4px; height: 4px;
+            background: rgba(255,255,255,0.3);
+            border-radius: 50%;
+            animation: floatUp 15s linear infinite;
+        }
+
+        /* --- LAYOUT --- */
+        .container {
+            flex: 1;
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding-top: 50px;
-            overflow-y: auto;
-            overflow-x: hidden;
+            padding: 40px 20px;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            z-index: 10;
         }
 
-        /* Container */
-       .container {
-    z-index: 10;
-    text-align: center;
-    width: 100%;
-    max-width: 1200px;
-    padding: 10px 20px; /* Padding တိုးလိုက်တယ် */
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    min-height: 100vh; /* Screen တစ်ခုလုံး အပြည့်ယူမယ် */
-}
-
-        /* Logo Area */
+        /* --- LOGO SECTION --- */
         .logo-area {
-    margin-top: 20px;     /* အပေါ်ကနေ နည်းနည်း ခွာလိုက်တယ် */
-    margin-bottom: 80px;  /* အောက်က Grid နဲ့ အကွာအဝေးကို တိုးလိုက်တယ် (ဒါက Grid ကို အောက်ပို့ပေးတာပါ) */
-    animation: fadeInDown 1s ease-out;
-    display: flex;
-    flex-direction: column;
-    align-items: center;   /* Logo နဲ့ စာသားကို အလယ်တည့်တည့် ပို့တာပါ */
-}
+            text-align: center;
+            margin-bottom: 40px;
+            animation: fadeInDown 1s ease-out;
+        }
 
         .main-logo {
-            max-width: 250px;
+            max-width: 220px;
             height: auto;
-            margin-bottom: 5px;
-            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.4)); /* Blue Glow like the reference */
+            filter: drop-shadow(0 0 15px rgba(59, 130, 246, 0.4));
+            transition: transform 0.3s;
+        }
+        .main-logo:hover {
+            transform: scale(1.05) rotate(-2deg);
         }
 
-        .logo-area p {
-            color: #eee;
-            font-size: 1.1rem;
-            letter-spacing: 1px;
-            font-weight: 500;
-            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        .site-title {
+            font-size: 3.5rem;
+            font-weight: 900;
+            background: linear-gradient(to right, #fff, var(--primary-blue));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin: 10px 0;
+            text-shadow: 0 0 30px rgba(59,130,246,0.3);
         }
 
-        /* --- THE GREEN NOTIFICATION BAR (Reference Style) --- */
-        .status-bar {
-            background-color: #4ade80; /* Bright Green */
-            color: #064e3b; /* Dark Green Text */
+        .tagline {
+            color: #ccc;
+            font-size: 1rem;
+            max-width: 600px;
+            margin: 0 auto;
+            line-height: 1.6;
+        }
+
+        /* --- IMPROVED UPDATE TICKER --- */
+        .update-container {
             width: 100%;
-            max-width: 900px;
-            padding: 15px 20px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            font-weight: 600;
+            max-width: 800px;
+            margin-bottom: 50px;
+            text-align: left; /* စာသားကို ဘယ်ဘက်ကပ်မယ် */
+            animation: fadeInUp 1s ease-out 0.2s backwards;
+        }
+
+        .update-title {
+            display: inline-flex;
+            align-items: center;
+            background: linear-gradient(90deg, var(--primary-blue), #1e40af);
+            color: white;
+            padding: 4px 15px;
+            border-radius: 20px 20px 20px 0; /* ထောင့်လေးတွေ လှအောင် */
+            font-size: 0.8rem;
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 8px; /* အောက်က စာတန်းနဲ့ ခွာလိုက်တာ */
+            box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3);
+        }
+
+        .ticker-wrap {
+            width: 100%;
+            height: 45px;
+            background: rgba(255, 255, 255, 0.03); /* အရမ်းမှောင်မနေအောင် နည်းနည်းလင်းပေးထားတယ် */
+            border: 1px solid var(--glass-border);
+            border-radius: 12px;
+            overflow: hidden;
+            display: flex;
+            align-items: center;
+            backdrop-filter: blur(10px);
+            position: relative;
+        }
+
+        .ticker-content {
+            display: inline-block;
+            white-space: nowrap;
+            padding-left: 100%;
+            animation: ticker 20s linear infinite; /* စာတန်းပြေးနှုန်းကို နည်းနည်းလျှော့ထားတယ် */
+            color: #4ade80; /* စာတန်းကို အစိမ်းနုရောင် Glow ပေးထားတယ် */
             font-size: 0.95rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
-            animation: fadeInDown 1.2s ease-out;
-        }
-        
-        /* Icon inside bar */
-        .status-bar i {
-            margin-right: 8px;
+            font-weight: 500;
+            text-shadow: 0 0 8px rgba(74, 222, 128, 0.4);
         }
 
-        /* Cards Grid */
+        .ticker-content span {
+            margin-right: 50px; /* စာကြောင်းတစ်ကြောင်းနဲ့ တစ်ကြောင်းကြား ခြားပေးတာ */
+        }
+
+        /* --- CARDS GRID --- */
         .grid {
-    display: grid;
-    grid-template-columns: repeat(3, 1fr); 
-    gap: 30px;
-    width: 100%;
-    max-width: 1100px;
-    margin-top: 10px;     /* Grid အပေါ်က နေရာလွတ် */
-    margin-bottom: 100px; /* အောက်ဆုံးမှာလည်း နေရာပိုချန်ထားတယ် */
-}     
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 30px;
+            width: 100%;
+            perspective: 1000px;
+            margin-bottom: 60px;
+            animation: fadeInUp 1s ease-out 0.4s backwards;
+        }
 
-        /* --- DARK CARD STYLES (Reference Style) --- */
         .card {
-            background: var(--glass-black); /* အဖြူအစား အမည်းရောင်ပြောင်းထားသည် */
-            border: 1px solid var(--border-light);
-            border-bottom: 4px solid transparent; /* အောက်ခြေအရောင်အတွက် */
-            border-radius: 16px;
-            padding: 40px 20px;
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            border-radius: 20px;
+            padding: 50px 20px;
             text-decoration: none;
             color: white;
-            transition: all 0.3s ease;
             position: relative;
             overflow: hidden;
             display: flex;
             flex-direction: column;
             align-items: center;
-            backdrop-filter: blur(12px);
+            backdrop-filter: blur(20px);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
             box-shadow: 0 10px 30px rgba(0,0,0,0.5);
         }
 
+        /* Hover Overlay Effect */
+        .card::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: linear-gradient(180deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.05) 100%);
+            opacity: 0;
+            transition: opacity 0.3s;
+        }
+        .card:hover::before { opacity: 1; }
+
         .card:hover {
-            transform: translateY(-5px);
-            background: rgba(0, 0, 0, 0.85);
+            transform: translateY(-10px);
+            background: rgba(30, 30, 30, 0.85);
         }
 
-        /* Icons */
         .icon-box {
-            width: 70px;
-            height: 70px;
+            width: 80px; height: 80px;
             border-radius: 50%;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-size: 28px;
+            font-size: 32px;
             margin-bottom: 20px;
-            transition: 0.3s;
             background: rgba(255,255,255,0.05);
+            transition: 0.4s;
+            position: relative;
+            z-index: 2;
         }
 
         .card h2 {
-            font-size: 1.6rem;
+            font-size: 1.5rem;
             font-weight: 800;
-            margin-bottom: 8px;
+            margin-bottom: 10px;
             text-transform: uppercase;
-            letter-spacing: 1px;
+            letter-spacing: 2px;
+            z-index: 2;
         }
 
         .card p {
             color: #aaa;
-            font-size: 0.85rem;
+            font-size: 0.9rem;
+            z-index: 2;
         }
 
-        /* Specific Card Colors (Underline Style) */
-        /* ANIME - Blue */
-        .card.anime { border-bottom-color: var(--anime-color); }
-        .card.anime .icon-box { color: var(--anime-color); }
-        .card.anime:hover { box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15); }
-        .card.anime:hover h2 { color: var(--anime-color); }
+        /* Specific Colors */
+        /* ANIME */
+        .card.anime { border-bottom: 4px solid var(--primary-blue); }
+        .card.anime .icon-box { color: var(--primary-blue); box-shadow: 0 0 20px rgba(59, 130, 246, 0.2); }
+        .card.anime:hover { box-shadow: 0 15px 40px rgba(59, 130, 246, 0.2); border-color: rgba(59, 130, 246, 0.3); }
+        .card.anime:hover .icon-box { background: var(--primary-blue); color: white; transform: rotateY(180deg); }
 
-        /* HENTAI - Red */
-        .card.hentai { border-bottom-color: var(--hentai-color); }
-        .card.hentai .icon-box { color: var(--hentai-color); }
-        .card.hentai:hover { box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15); }
-        .card.hentai:hover h2 { color: var(--hentai-color); }
-        
+        /* HENTAI */
+        .card.hentai { border-bottom: 4px solid var(--danger-red); }
+        .card.hentai .icon-box { color: var(--danger-red); box-shadow: 0 0 20px rgba(239, 68, 68, 0.2); }
+        .card.hentai:hover { box-shadow: 0 15px 40px rgba(239, 68, 68, 0.2); border-color: rgba(239, 68, 68, 0.3); }
+        .card.hentai:hover .icon-box { background: var(--danger-red); color: white; transform: rotate(15deg); }
+
+        /* MUSIC */
+        .card.music { border-bottom: 4px solid var(--magic-purple); }
+        .card.music .icon-box { color: var(--magic-purple); box-shadow: 0 0 20px rgba(168, 85, 247, 0.2); }
+        .card.music:hover { box-shadow: 0 15px 40px rgba(168, 85, 247, 0.2); border-color: rgba(168, 85, 247, 0.3); }
+        .card.music:hover .icon-box { background: var(--magic-purple); color: white; transform: scale(1.1); }
+
         .badge {
             position: absolute;
-            top: 15px;
-            right: 15px;
-            background: var(--hentai-color);
+            top: 15px; right: 15px;
+            background: var(--danger-red);
             color: white;
-            font-size: 10px;
-            font-weight: bold;
-            padding: 4px 8px;
-            border-radius: 4px;
+            font-size: 0.7rem;
+            font-weight: 800;
+            padding: 5px 10px;
+            border-radius: 30px;
+            box-shadow: 0 0 10px var(--danger-red);
+            z-index: 5;
         }
 
-        /* MUSIC - Purple */
-        .card.music { border-bottom-color: var(--music-color); }
-        .card.music .icon-box { color: var(--music-color); }
-        .card.music:hover { box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15); }
-        .card.music:hover h2 { color: var(--music-color); }
-
-        /* Footer */
+        /* --- FOOTER --- */
         footer {
+            background: rgba(0, 0, 0, 0.95);
+            border-top: 1px solid #222;
+            padding: 40px 20px;
+            text-align: center;
             margin-top: auto;
-            margin-bottom: 20px;
-            color: #666;
-            font-size: 0.8rem;
         }
 
-        /* Animations */
+        .footer-nav {
+            margin-bottom: 25px;
+        }
+        .footer-nav a {
+            color: #888;
+            text-decoration: none;
+            margin: 0 15px;
+            font-weight: 500;
+            transition: 0.3s;
+            position: relative;
+        }
+        .footer-nav a:hover { color: white; }
+        .footer-nav a::after {
+            content: ''; position: absolute; bottom: -5px; left: 0; width: 0; height: 2px;
+            background: var(--primary-blue); transition: width 0.3s;
+        }
+        .footer-nav a:hover::after { width: 100%; }
+
+        .social-btn {
+            display: inline-flex;
+            width: 40px; height: 40px;
+            border: 1px solid #333;
+            border-radius: 50%;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            text-decoration: none;
+            margin: 0 8px;
+            transition: 0.3s;
+        }
+        .social-btn:hover {
+            background: var(--primary-blue);
+            border-color: var(--primary-blue);
+            transform: translateY(-3px);
+        }
+
+        /* --- ANIMATIONS --- */
         @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(30px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes pulse { 0% { opacity: 0.6; } 50% { opacity: 1; } 100% { opacity: 0.6; } }
+        @keyframes ticker { 0% { transform: translateX(0); } 100% { transform: translateX(-100%); } }
+        @keyframes floatUp { 0% { transform: translateY(100vh) scale(0); opacity: 0; } 50% { opacity: 0.5; } 100% { transform: translateY(-10vh) scale(1); opacity: 0; } }
 
         /* --- RESPONSIVE --- */
-        @media (max-width: 1024px) {
+        @media (max-width: 900px) {
             .grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; }
+            .site-title { font-size: 2.5rem; }
         }
 
-        @media (max-width: 768px) {
-            body {
-        /* ဖုန်းအတွက် သီးသန့် Background ပုံ */
-        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
-                          url('mobile-bg.jpg'); /* ပုံအသစ်နာမည်ကို ဒီမှာ ထည့်ပါ */
-        
-        background-attachment: scroll; /* ဖုန်းမှာ ပုံငြိမ်နေရင် လေးတတ်လို့ scroll ပြောင်းတာပါ */
-        background-position: center top; /* ပုံရဲ့ အပေါ်ပိုင်းကို ပိုပြစေဖို့ */
-    }
+        @media (max-width: 600px) {
             .grid { grid-template-columns: 1fr; max-width: 350px; }
-            .status-bar { width: 90%; font-size: 0.85rem; }
-            .main-logo { max-width: 200px; }
-            .logo-area {
-        margin-bottom: 50px;
-        .grid {
-        margin-bottom: 60px;
-    }
-        }}
+            .site-title { font-size: 2rem; }
+            .ticker-wrap { width: 95%; }
+            .card { padding: 30px 20px; }
+            body { background-attachment: scroll; } /* Better performance on mobile */
+        }
     </style>
 </head>
 <body>
 
-    <div class="container">
-        <div class="logo-area">
+    <div id="preloader">
+        <div class="loader"></div>
+        <div class="loader-text">MIKU MM LOADING...</div>
+    </div>
 
-            <img src="logo.png" alt="MIKU WORLD Logo" class="main-logo">
-            <h1 style="font-size: 3rem; font-weight: 800; color: white; text-shadow: 0 0 20px rgba(59,130,246,0.5);">MIKU MM</h1>
-        </br>
-            <p>Anime၊ Hanime နဲ့ Jsong တွေကို မြန်မာစာတန်းထိုးနဲ့ အကောင်းဆုံးခံစားနိုင်ဖို့အတွက်.....</p>
+    <div class="particles" id="particles">
         </div>
 
-        <div class="status-bar">
-            <i class="fa-solid fa-bell"></i>
-            ကဲ Anime လား 👀၊ Hentai ကြည့်မှာလား 🌚၊ သီချင်းနားထောင်မလို့လား 🎶 ( ◡́.◡̀)(^◡^ )
+    <div class="container">
+        
+        <div class="logo-area">
+            <img src="logo.png" alt="MIKU MM" class="main-logo" onerror="this.style.display='none'"> 
+            <h1 class="site-title">MIKU MM</h1>
+            <p class="tagline">Anime, Hanime နဲ့ Japan သီချင်းကောင်းတွေကို တစ်နေရာတည်းမှာ <br> မြန်မာစာတန်းထိုးနဲ့ အကောင်းဆုံးခံစားလိုက်ပါ။</p>
+        </div>
+
+      <div class="update-container">
+            <div class="update-title">
+                <i class="fa-solid fa-bolt-lightning" style="margin-right: 8px;"></i> LATEST UPDATES
+            </div>
+            <div class="ticker-wrap">
+                <div class="ticker-content">
+                    <span>• MIKU MM မှ နွေးထွေးစွာ ကြိုဆိုပါတယ် ( ◡́.◡̀)(^◡^ )</span>
+                    <span>• Anime ကြည့်ချင်တာဆို ANIME ဆိုတဲ့ Card လေးကို နိပ်နော် 👀</span>
+                    <span>• Hentai ကြည့်မလို့လား HANIME ထဲကိုသွား 🌚</span>
+                    <span>• Anime Music တွေနဲ့ J-Pop တွေနားထောင်ချင်ရင်တော့ MUSIC ထဲဝင်လိုက် 🎶</span>
+                    <span>• Website အသုံးပြုရတာ အဆင်မပြေမှုရှိပါက Telegram မှာ ဆက်သွယ်နိုင်ပါတယ်။</span>
+                </div>
+            </div>
         </div>
 
         <div class="grid">
             <a href="https://anime.mikumm.top" class="card anime">
                 <div class="icon-box"><i class="fa-solid fa-play"></i></div>
                 <h2>Anime</h2>
-                <p>Stream Latest Series</p>
+                <p>Anime တွေ မြန်မာစာတန်းထိုးနဲ့ ကြည့်ရန်</p>
             </a>
 
-            <a href="https://hanime.mikumm.top" class="card hentai">
-                <span class="badge">18+</span>
+            <a href="/cs.html" class="card hentai">
+                <span class="badge">18+ ONLY</span>
                 <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
                 <h2>Hanime</h2>
-                <p>Adult Content Only</p>
+                <p>Hentai တွေကို မြန်မာစာတန်းထိုးနဲ့ ကြည့်ရန်</p>
             </a>
 
-            <a href="https://jsong.mikumm.top" class="card music">
+            <a href="/cs.html" class="card music">
                 <div class="icon-box"><i class="fa-solid fa-music"></i></div>
                 <h2>Music</h2>
-                <p>Japanese Songs & OSTs</p>
+                <p>J-Pop နဲ့ Anime OSTs တွေကို မြန်မာ Lyric နဲ့ ခံစားရန်</p>
             </a>
         </div>
 
-        <footer>
-            &copy; 2024 Miku World. All rights reserved.
-        </footer>
     </div>
 
+    <footer>
+        <div class="footer-nav">
+            <a href="https://anime.mikumm.top">ANIME</a>
+            <a href="https://hanime.mikumm.top">HANIME</a>
+            <a href="https://jsong.mikumm.top">MUSIC</a>
+            <a href="#">CONTACT VIA TELEGRAM</a>
+        </div>
+        
+        <div style="margin-bottom: 20px;">
+            <a href="#" class="social-btn"><i class="fab fa-telegram"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-facebook"></i></a>
+            <a href="#" class="social-btn"><i class="fab fa-discord"></i></a>
+        </div>
+
+        <p style="font-size: 0.8rem; color: #555;">
+            &copy; <span id="year"></span> MIKU MM. Made with <i class="fa-solid fa-heart" style="color: #ef4444;"></i> by Keisatsu.
+        </p>
+    </footer>
+
     <script>
-        // Optional: Simple Tilt Effect
-        document.querySelectorAll('.card').forEach(card => {
-            card.addEventListener('mousemove', (e) => {
-                const rect = card.getBoundingClientRect();
-                const x = e.clientX - rect.left;
-                const y = e.clientY - rect.top;
-                card.style.transform = 'translateY(-5px) scale(1.02)';
-            });
-            card.addEventListener('mouseleave', () => {
-                card.style.transform = 'translateY(0) scale(1)';
-            });
+        // Preloader Logic
+        window.addEventListener('load', () => {
+            const preloader = document.getElementById('preloader');
+            preloader.style.opacity = '0';
+            setTimeout(() => {
+                preloader.style.display = 'none';
+            }, 500);
         });
+
+        // Set Year
+        document.getElementById("year").innerHTML = new Date().getFullYear();
+
+        // Create Background Particles
+        const particleContainer = document.getElementById('particles');
+        const particleCount = 30; // Number of floating dots
+
+        for(let i=0; i<particleCount; i++) {
+            const span = document.createElement('span');
+            span.classList.add('particle');
+            
+            // Random positioning and sizing
+            const size = Math.random() * 5 + 2;
+            span.style.width = `${size}px`;
+            span.style.height = `${size}px`;
+            span.style.left = `${Math.random() * 100}%`;
+            span.style.animationDuration = `${Math.random() * 10 + 10}s`;
+            span.style.animationDelay = `${Math.random() * 5}s`;
+            span.style.opacity = Math.random() * 0.5;
+            
+            particleContainer.appendChild(span);
+        }
     </script>
 </body>
-</html> 
+</html>
