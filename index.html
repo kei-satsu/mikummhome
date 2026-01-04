@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MIKU WORLD - Portal</title>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;500;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <style>
+        /* --- CSS STYLES --- */
+        :root {
+            --anime-color: #3b82f6; /* Blue */
+            --hentai-color: #ef4444; /* Red */
+            --music-color: #a855f7;  /* Purple */
+            --bg-dark: #050505;
+            --glass-black: rgba(0, 0, 0, 0.7); /* အမည်းရောင် Glass */
+            --border-light: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Outfit', sans-serif;
+        }
+
+        body {
+            /* Background ပုံ (ပုံအလန်းစားတစ်ခု ရှာထည့်ပါ) */
+            background-image: linear-gradient(rgba(0, 0, 0, 0.6), rgba(0, 0, 0, 0.8)), url('background.jpg');
+            background-size: cover;
+            background-position: center;
+            background-attachment: fixed;
+            background-repeat: no-repeat;
+            
+            color: white;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding-top: 50px;
+            overflow-y: auto;
+            overflow-x: hidden;
+        }
+
+        /* Container */
+       .container {
+    z-index: 10;
+    text-align: center;
+    width: 100%;
+    max-width: 1200px;
+    padding: 10px 20px; /* Padding တိုးလိုက်တယ် */
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    min-height: 100vh; /* Screen တစ်ခုလုံး အပြည့်ယူမယ် */
+}
+
+        /* Logo Area */
+        .logo-area {
+    margin-top: 20px;     /* အပေါ်ကနေ နည်းနည်း ခွာလိုက်တယ် */
+    margin-bottom: 80px;  /* အောက်က Grid နဲ့ အကွာအဝေးကို တိုးလိုက်တယ် (ဒါက Grid ကို အောက်ပို့ပေးတာပါ) */
+    animation: fadeInDown 1s ease-out;
+    display: flex;
+    flex-direction: column;
+    align-items: center;   /* Logo နဲ့ စာသားကို အလယ်တည့်တည့် ပို့တာပါ */
+}
+
+        .main-logo {
+            max-width: 250px;
+            height: auto;
+            margin-bottom: 5px;
+            filter: drop-shadow(0 0 20px rgba(59, 130, 246, 0.4)); /* Blue Glow like the reference */
+        }
+
+        .logo-area p {
+            color: #eee;
+            font-size: 1.1rem;
+            letter-spacing: 1px;
+            font-weight: 500;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.8);
+        }
+
+        /* --- THE GREEN NOTIFICATION BAR (Reference Style) --- */
+        .status-bar {
+            background-color: #4ade80; /* Bright Green */
+            color: #064e3b; /* Dark Green Text */
+            width: 100%;
+            max-width: 900px;
+            padding: 15px 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            font-weight: 600;
+            font-size: 0.95rem;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(74, 222, 128, 0.3);
+            animation: fadeInDown 1.2s ease-out;
+        }
+        
+        /* Icon inside bar */
+        .status-bar i {
+            margin-right: 8px;
+        }
+
+        /* Cards Grid */
+        .grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr); 
+    gap: 30px;
+    width: 100%;
+    max-width: 1100px;
+    margin-top: 10px;     /* Grid အပေါ်က နေရာလွတ် */
+    margin-bottom: 100px; /* အောက်ဆုံးမှာလည်း နေရာပိုချန်ထားတယ် */
+}     
+
+        /* --- DARK CARD STYLES (Reference Style) --- */
+        .card {
+            background: var(--glass-black); /* အဖြူအစား အမည်းရောင်ပြောင်းထားသည် */
+            border: 1px solid var(--border-light);
+            border-bottom: 4px solid transparent; /* အောက်ခြေအရောင်အတွက် */
+            border-radius: 16px;
+            padding: 40px 20px;
+            text-decoration: none;
+            color: white;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            backdrop-filter: blur(12px);
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            background: rgba(0, 0, 0, 0.85);
+        }
+
+        /* Icons */
+        .icon-box {
+            width: 70px;
+            height: 70px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+            margin-bottom: 20px;
+            transition: 0.3s;
+            background: rgba(255,255,255,0.05);
+        }
+
+        .card h2 {
+            font-size: 1.6rem;
+            font-weight: 800;
+            margin-bottom: 8px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .card p {
+            color: #aaa;
+            font-size: 0.85rem;
+        }
+
+        /* Specific Card Colors (Underline Style) */
+        /* ANIME - Blue */
+        .card.anime { border-bottom-color: var(--anime-color); }
+        .card.anime .icon-box { color: var(--anime-color); }
+        .card.anime:hover { box-shadow: 0 10px 30px rgba(59, 130, 246, 0.15); }
+        .card.anime:hover h2 { color: var(--anime-color); }
+
+        /* HENTAI - Red */
+        .card.hentai { border-bottom-color: var(--hentai-color); }
+        .card.hentai .icon-box { color: var(--hentai-color); }
+        .card.hentai:hover { box-shadow: 0 10px 30px rgba(239, 68, 68, 0.15); }
+        .card.hentai:hover h2 { color: var(--hentai-color); }
+        
+        .badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: var(--hentai-color);
+            color: white;
+            font-size: 10px;
+            font-weight: bold;
+            padding: 4px 8px;
+            border-radius: 4px;
+        }
+
+        /* MUSIC - Purple */
+        .card.music { border-bottom-color: var(--music-color); }
+        .card.music .icon-box { color: var(--music-color); }
+        .card.music:hover { box-shadow: 0 10px 30px rgba(168, 85, 247, 0.15); }
+        .card.music:hover h2 { color: var(--music-color); }
+
+        /* Footer */
+        footer {
+            margin-top: auto;
+            margin-bottom: 20px;
+            color: #666;
+            font-size: 0.8rem;
+        }
+
+        /* Animations */
+        @keyframes fadeInDown { from { opacity: 0; transform: translateY(-30px); } to { opacity: 1; transform: translateY(0); } }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 1024px) {
+            .grid { grid-template-columns: repeat(2, 1fr); max-width: 700px; }
+        }
+
+        @media (max-width: 768px) {
+            body {
+        /* ဖုန်းအတွက် သီးသန့် Background ပုံ */
+        background-image: linear-gradient(rgba(0, 0, 0, 0.7), rgba(0, 0, 0, 0.8)), 
+                          url('mobile-bg.jpg'); /* ပုံအသစ်နာမည်ကို ဒီမှာ ထည့်ပါ */
+        
+        background-attachment: scroll; /* ဖုန်းမှာ ပုံငြိမ်နေရင် လေးတတ်လို့ scroll ပြောင်းတာပါ */
+        background-position: center top; /* ပုံရဲ့ အပေါ်ပိုင်းကို ပိုပြစေဖို့ */
+    }
+            .grid { grid-template-columns: 1fr; max-width: 350px; }
+            .status-bar { width: 90%; font-size: 0.85rem; }
+            .main-logo { max-width: 200px; }
+            .logo-area {
+        margin-bottom: 50px;
+        .grid {
+        margin-bottom: 60px;
+    }
+        }}
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div class="logo-area">
+
+            <img src="logo.png" alt="MIKU WORLD Logo" class="main-logo">
+            <h1 style="font-size: 3rem; font-weight: 800; color: white; text-shadow: 0 0 20px rgba(59,130,246,0.5);">MIKU MM</h1>
+        </br>
+            <p>Anime၊ Hanime နဲ့ Jsong တွေကို မြန်မာစာတန်းထိုးနဲ့ အကောင်းဆုံးခံစားနိုင်ဖို့အတွက်.....</p>
+        </div>
+
+        <div class="status-bar">
+            <i class="fa-solid fa-bell"></i>
+            ကဲ Anime လား 👀၊ Hentai ကြည့်မှာလား 🌚၊ သီချင်းနားထောင်မလို့လား 🎶 ( ◡́.◡̀)(^◡^ )
+        </div>
+
+        <div class="grid">
+            <a href="https://anime.mikumm.top" class="card anime">
+                <div class="icon-box"><i class="fa-solid fa-play"></i></div>
+                <h2>Anime</h2>
+                <p>Stream Latest Series</p>
+            </a>
+
+            <a href="https://hanime.mikumm.top" class="card hentai">
+                <span class="badge">18+</span>
+                <div class="icon-box"><i class="fa-solid fa-fire"></i></div>
+                <h2>Hanime</h2>
+                <p>Adult Content Only</p>
+            </a>
+
+            <a href="https://jsong.mikumm.top" class="card music">
+                <div class="icon-box"><i class="fa-solid fa-music"></i></div>
+                <h2>Music</h2>
+                <p>Japanese Songs & OSTs</p>
+            </a>
+        </div>
+
+        <footer>
+            &copy; 2024 Miku World. All rights reserved.
+        </footer>
+    </div>
+
+    <script>
+        // Optional: Simple Tilt Effect
+        document.querySelectorAll('.card').forEach(card => {
+            card.addEventListener('mousemove', (e) => {
+                const rect = card.getBoundingClientRect();
+                const x = e.clientX - rect.left;
+                const y = e.clientY - rect.top;
+                card.style.transform = 'translateY(-5px) scale(1.02)';
+            });
+            card.addEventListener('mouseleave', () => {
+                card.style.transform = 'translateY(0) scale(1)';
+            });
+        });
+    </script>
+</body>
+</html> 
